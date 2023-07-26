@@ -5,13 +5,13 @@ import {
   PalmThemeProvider
 } from './main/context'
 import './App.css';
-
+import SearchSection from './main/sections/SearchSection/SearchSection'
 function App() {
   return (
     <QueryContextProvider>
       <PalmThemeProvider>
         <BooksInfoProvider>
-            <div></div>
+            <SearchSection></SearchSection>
         </BooksInfoProvider>
       </PalmThemeProvider>
     </QueryContextProvider>
