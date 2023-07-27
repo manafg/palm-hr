@@ -2,12 +2,13 @@ import { type } from "os";
 
 type option = {
     title : string,
-    id: string,
     firstLetter: string,
 }
 
 type SearchInputProps = {
-    options: option[]
+    options: option[],
+    type: string,
+    clearSearch: any
 };
 
 export type {SearchInputProps}

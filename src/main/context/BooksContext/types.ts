@@ -2,7 +2,7 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 
 import {BookInfo} from './BookType'
 
-type BooksInfoState = BookInfoResponse[]| null;
+type BooksInfoState = BookInfo[]| null;
 
 type SetBooksInfoState = Dispatch<SetStateAction<BooksInfoState>>;
 
@@ -18,5 +18,5 @@ type BookInfoResponse = {
     items : BookInfo[]
 }
 
-export type { BooksInfoContextProviderProps, BooksInfoContext, BooksInfoState, SetBooksInfoState, BookInfo };
+export type {BookInfoResponse, BooksInfoContextProviderProps, BooksInfoContext, BooksInfoState, SetBooksInfoState, BookInfo };
 

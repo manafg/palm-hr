@@ -2,17 +2,34 @@ import * as React from 'react';
 import {TextField , Autocomplete} from '@mui/material';
 import {SearchInputProps} from './types';
 import {GroupItems, GroupHeader} from './styles'
+import useBookConfig from '../../hooks/useBookConfig'
+import _ from "lodash";
 
+function SearchInput({options , type, clearSearch} : SearchInputProps) {
 
-function SearchInput({options} : SearchInputProps) {
-//   const options = top100Films.map((option) => {
-//     const firstLetter = option.title[0].toUpperCase();
-//     return {
-//       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-//       ...option,
-//     };
-//   });
-
+  const { searchByAuthorCallBack , searchByPuplisherCallBack , searchByTitleCallBack } = useBookConfig();
+ //ts-ignore
+  const debounce_fun = _.debounce((event , text) => {
+    debugger
+    if(!text) {
+      clearSearch();
+      return
+    }
+    switch (type) {
+      case 'title':
+        searchByTitleCallBack(text.title);
+        break;
+      case 'publisher':
+         searchByAuthorCallBack(text.title)
+        break;
+        case 'publisher':
+          searchByPuplisherCallBack(text.title)
+        break;
+        default:
+          
+          break;
+    }
+  }, 1000);
   return (
     <Autocomplete
       id="grouped-demo"
@@ -20,6 +37,7 @@ function SearchInput({options} : SearchInputProps) {
       groupBy={(option) => option.firstLetter}
       getOptionLabel={(option) => option.title}
       sx={{ width: 300 }}
+      onChange={debounce_fun}
       renderInput={(params) => <TextField {...params} label="Books" />}
       renderGroup={(params) => (
         <li key={params.key}>

@@ -2,12 +2,8 @@ import * as React from 'react';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-function Filter() {
-  const [selectedValue, setSelectedValue] = React.useState('a');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-  };
+function Filter({selectedValue, handleChange}: any) {
+  
 
   return (
     <div>
