@@ -11,4 +11,4 @@ type SearchInputProps = {
     clearSearch: any
 };
 
-export type {SearchInputProps}
+export type {SearchInputProps, option}

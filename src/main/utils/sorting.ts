@@ -1,47 +1,26 @@
 import { BookInfo } from "../context/BooksContext/types";
+import {option} from '../components/SearchInput/types'
 
 
-function searchByTitleOptions(array: BookInfo[]) {
+function searchByOption(array: BookInfo[], filter: keyof BookInfo['volumeInfo']): option[] {
   return array.map((option) => {
-    const firstLetter = option.volumeInfo.title[0].toUpperCase();
+    const item = option?.volumeInfo?.[filter];
+    const parsedItem :any= Array.isArray(item) ? item[0] : item;
+    const firstLetter = parsedItem?.charAt(0)?.toUpperCase() || 'A';
+
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-      title:option.volumeInfo.title,
+      title: parsedItem || '',
     };
   });
 }
 
-function searchByAuthorOptions(array: BookInfo[]) {
-  return array.map((option) => {
-    const firstLetter = option.volumeInfo?.authors?.length ? option.volumeInfo.authors[0][0].toUpperCase() : "A";
-    return {
-      firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-      title:option.volumeInfo?.authors?.length ? option.volumeInfo?.authors[0] : 'None',
-    };
+function searchByKey(array: BookInfo[], text: string, filter: keyof BookInfo['volumeInfo']) {
+  return array.filter(obj => {
+    const item = obj?.volumeInfo[filter];
+    const value = Array.isArray(item) ? item[0] : item;
+    return typeof value === 'string' && value.includes(text);
   });
 }
 
-function searchByPuplisherOptions(array: BookInfo[]) {
-  return array.map((option) => {
-    const firstLetter = option.volumeInfo.publisher[0].toUpperCase();
-    return {
-      firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-      title:option.volumeInfo.publisher,
-    };
-  });}
-
-  function searchByTitle(array: BookInfo[], text: string) {
-    return array.filter(obj => obj?.volumeInfo.title.includes(text));
-  }
-
-  function searchByAuthor(array: BookInfo[], text: string) {
-    return array.filter(obj => obj?.volumeInfo.authors[0].includes(text));
-  }
-
-  function searchByPuplisher (array: BookInfo[], text: string) {
-    return array.filter(obj => obj?.volumeInfo.publisher.includes(text));
-  }
-
-
-
-export {searchByAuthor,  searchByPuplisher,searchByTitle, searchByTitleOptions, searchByAuthorOptions, searchByPuplisherOptions };
+export {searchByKey, searchByOption };

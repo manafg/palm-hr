@@ -2,14 +2,14 @@ import {produce} from "immer";
 import { useContext, useCallback } from "react";
 import { BookInfo, BooksInfoContext } from '../context/BooksContext/types'
 import { BooksInfoStateContext } from '../context'
-import {searchByAuthor , searchByPuplisher, searchByTitle} from '../utils/sorting'
+import {searchByKey} from '../utils/sorting'
+
 function useBookConfig() {
     const [state, setState] = useContext<BooksInfoContext>(BooksInfoStateContext);
   
     const saveBooksMap = useCallback(
       (BooksResponse: BookInfo[]) => {
         const parsedBooks: BookInfo[] = BooksResponse;
-  
         setState(parsedBooks);
       },
       [setState],
@@ -17,37 +17,38 @@ function useBookConfig() {
 
     const searchByTitleCallBack  = useCallback(
         (text: string) => {
-          const sortedBooks= produce(state, draft =>
+          const sortedBooks= produce(state, (draft) => 
             // @ts-ignore
-            searchByTitle(draft, text),
-          );
+            searchByKey(draft, text, 'title')
+        );
+        // @ts-ignore
           setState(sortedBooks);
         },
-        [setState],
+        [setState , state],
       );
 
       const searchByPuplisherCallBack  = useCallback(
         (text: string) => {
-          const sortedBooks= produce(state, draft =>
+          const sortedBooks= produce(state, (draft) =>
             // @ts-ignore
-            searchByPuplisher(state, text),
+            searchByKey(draft, text, 'publisher'),
           );
     
           setState(sortedBooks);
         },
-        [setState],
+        [setState, state],
       );
 
       const searchByAuthorCallBack = useCallback(
         (text: string) => {
-          const sortedBooks= produce(state, draft =>
+          const sortedBooks= produce(state, (draft) =>
             // @ts-ignore
-            searchByAuthor(state, text),
+            searchByKey(draft, text, 'authors'),
           );
     
           setState(sortedBooks);
         },
-        [setState],
+        [setState, state],
       );
 
     return {

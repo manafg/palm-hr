@@ -1,35 +1,39 @@
-import * as React from 'react';
-import {TextField , Autocomplete} from '@mui/material';
-import {SearchInputProps} from './types';
-import {GroupItems, GroupHeader} from './styles'
-import useBookConfig from '../../hooks/useBookConfig'
+import React, { useCallback } from 'react';
+import { TextField, Autocomplete } from '@mui/material';
+import { SearchInputProps } from './types';
+import { GroupItems, GroupHeader } from './styles';
+import useBookConfig from '../../hooks/useBookConfig';
 import _ from "lodash";
 
-function SearchInput({options , type, clearSearch} : SearchInputProps) {
+function SearchInput({ options, type, clearSearch }: SearchInputProps) {
+  const { searchByAuthorCallBack, searchByPuplisherCallBack, searchByTitleCallBack } = useBookConfig();
 
-  const { searchByAuthorCallBack , searchByPuplisherCallBack , searchByTitleCallBack } = useBookConfig();
- //ts-ignore
-  const debounce_fun = _.debounce((event , text) => {
-    debugger
-    if(!text) {
-      clearSearch();
-      return
-    }
-    switch (type) {
-      case 'title':
-        searchByTitleCallBack(text.title);
-        break;
-      case 'publisher':
-         searchByAuthorCallBack(text.title)
-        break;
-        case 'publisher':
-          searchByPuplisherCallBack(text.title)
-        break;
-        default:
-          
+  const debounceFunc = useCallback(
+    _.debounce((event, text) => {
+
+      if (!text) {
+        clearSearch();
+        return;
+      }
+
+      switch (type) {
+        case 'title':
+          searchByTitleCallBack(text.title);
           break;
-    }
-  }, 1000);
+        case 'authors':
+          searchByAuthorCallBack(text.title);
+          break;
+        case 'publisher':
+          searchByPuplisherCallBack(text.title);
+          break;
+        default:
+          break;
+      }
+    }, 1000),
+
+    [type, searchByTitleCallBack, searchByAuthorCallBack, searchByPuplisherCallBack, clearSearch]
+  );
+
   return (
     <Autocomplete
       id="grouped-demo"
@@ -37,7 +41,7 @@ function SearchInput({options , type, clearSearch} : SearchInputProps) {
       groupBy={(option) => option.firstLetter}
       getOptionLabel={(option) => option.title}
       sx={{ width: 300 }}
-      onChange={debounce_fun}
+      onChange={(event, value) => debounceFunc(event, value)}
       renderInput={(params) => <TextField {...params} label="Books" />}
       renderGroup={(params) => (
         <li key={params.key}>
