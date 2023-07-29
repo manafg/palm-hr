@@ -2,12 +2,17 @@ import * as React from 'react';
 import {Card , CardActions , CardContent , CardMedia , Button, Typography} from '@mui/material';
 import {BookInfo} from '../../context/BooksContext/types';
 import { styled } from '@mui/material/styles';
+
+import { useNavigate } from 'react-router-dom';
+
+
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 300,
 }));
 
 
  function BookCard(book: BookInfo) {
+  
   const DescriptionTypography = styled(Typography)(({ theme }) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -15,6 +20,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
     '-webkit-line-clamp': '3', 
     '-webkit-box-orient': 'vertical',
   }));
+
+  const navigate = useNavigate();
+
   return (
     <StyledCard sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -32,7 +40,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
       </CardContent>
       <CardActions>
         
-        <Button size="small">View</Button>
+        <Button size="small" onClick={()=>navigate(`${book.id}`)}>View</Button>
       </CardActions>
     </StyledCard>
   );

@@ -5,13 +5,23 @@ import {
   PalmThemeProvider
 } from './main/context'
 import './App.css';
-import SearchSection from './main/sections/SearchSection/SearchSection'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {Header } from './main/components'
+import SearchSection from './main/sections/SearchSection'
+import BooksSection from './main/sections/BooksSection'
+
 function App() {
   return (
     <QueryContextProvider>
       <PalmThemeProvider>
         <BooksInfoProvider>
-            <SearchSection></SearchSection>
+          <BrowserRouter>
+            <Header/>
+            <Routes>
+              <Route path="/"  element={<SearchSection/>} />
+              <Route path=":id" element={<BooksSection/>}/>
+            </Routes>
+         </BrowserRouter>
         </BooksInfoProvider>
       </PalmThemeProvider>
     </QueryContextProvider>

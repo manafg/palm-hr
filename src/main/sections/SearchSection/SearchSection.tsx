@@ -18,7 +18,6 @@ function SearchSection () {
 
         return (
             <>
-                <Header></Header>
                 <Container>
                 <Box sx={{ flexGrow: 1 , marginTop:2}}>
                     <Grid container spacing={2}>
