@@ -2,6 +2,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { BooksInfoContext, BookInfo } from '../../context/BooksContext/types';
 import useBookConfig  from '../useBookConfig';
+import bookinfo from '../../mocks/bookinfo'
 import React from 'react'
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -33,7 +34,7 @@ describe('useBookConfig', () => {
   });
 
   test('calls setState with correct parsedBooks when saveBooksMap is called', () => {
-    const parsedBooks: BookInfo[] = [{ id: '1', title: 'Book 1' }];
+    const parsedBooks: BookInfo[] = [bookinfo];
     const setState = jest.fn();
     (React.useContext as jest.Mock).mockReturnValue([[], setState] as BooksInfoContext);
 
@@ -46,8 +47,8 @@ describe('useBookConfig', () => {
   });
 
   test('calls searchByKey with correct arguments and sets state correctly in searchByTitleCallBack', () => {
-    const initialState: BookInfo[] = [{ id: '1', title: 'Book 1' }];
-    const sortedBooks: BookInfo[] = [{ id: '1', title: 'Book 1' }, { id: '2', title: 'Book 2' }];
+    const initialState: BookInfo[] = [bookinfo];
+    const sortedBooks: BookInfo[] = [bookinfo];
     const setState = jest.fn();
     (React.useContext as jest.Mock).mockReturnValue([initialState, setState] as BooksInfoContext);
     (require('immer').produce as jest.Mock).mockImplementation((state, callback) => {

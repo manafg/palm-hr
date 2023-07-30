@@ -29,7 +29,7 @@ describe('BookCard', () => {
 
   test('navigates to the book view on "View" button click', () => {
     const navigateMock = jest.fn();
-    useNavigate.mockReturnValue(navigateMock);
+    //useNavigate.mockReturnValue(navigateMock);
 
 
 

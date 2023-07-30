@@ -24,7 +24,8 @@ describe('useBookData', () => {
   test('returns the correct initial state', () => {
     const initialState: BookInfo[] = [];
     const setState = jest.fn();
-    (useContext as jest.Mock).mockReturnValue([initialState, setState] as BooksInfoStateContext);
+    //ts-ignore
+    (useContext as jest.Mock).mockReturnValue([initialState, setState]);
 
     const { result } = renderHook(() => useBookData());
 
@@ -36,7 +37,7 @@ describe('useBookData', () => {
   test('calls searchByOption with correct arguments when filters change', () => {
     const books: BookInfo[] = [bookinfo];
     const setFilters = jest.fn();
-    (useContext as jest.Mock).mockReturnValue([books, jest.fn()] as BooksInfoStateContext);
+    (useContext as jest.Mock).mockReturnValue([books, jest.fn()]);
     (require('../../utils/sorting').searchByOption as jest.Mock).mockReturnValue([]);
 
     const { result, rerender } = renderHook(() => useBookData());
