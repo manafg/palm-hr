@@ -1,12 +1,12 @@
+// @ts-ignore
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect'; // For additional matchers
+import '@testing-library/jest-dom/extend-expect';
 
 import BookCard from '../BookCard';
 import  bookInfo from "../../../mocks/bookinfo";
 import { useNavigate } from 'react-router-dom';
 
-// Mocking the useNavigate hook
 jest.mock('react-router-dom')
 
 
@@ -31,7 +31,7 @@ describe('BookCard', () => {
     const navigateMock = jest.fn();
     useNavigate.mockReturnValue(navigateMock);
 
-   
+
 
     render(<BookCard {...bookInfo} />);
 

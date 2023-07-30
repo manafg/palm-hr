@@ -1,4 +1,3 @@
-// hooks/useBooksData.ts
 import { useContext, useState, useEffect } from "react";
 import { BooksInfoStateContext } from '../context/BooksContext/BooksContext';
 import { searchByOption } from '../utils/sorting';
